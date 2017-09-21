@@ -13,6 +13,7 @@
 		558882C01F72093E00409BD2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 558882BE1F72093E00409BD2 /* Main.storyboard */; };
 		558882C21F72093E00409BD2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 558882C11F72093E00409BD2 /* Assets.xcassets */; };
 		558882C51F72093E00409BD2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 558882C31F72093E00409BD2 /* LaunchScreen.storyboard */; };
+		558882EE1F72F41E00409BD2 /* FrequencyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 558882ED1F72F41E00409BD2 /* FrequencyViewController.m */; };
 		A3F5C64D1F7216A600863815 /* AudioFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F5C63B1F7216A500863815 /* AudioFileReader.m */; };
 		A3F5C64E1F7216A600863815 /* BufferedOverlapQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F5C63D1F7216A500863815 /* BufferedOverlapQueue.m */; };
 		A3F5C64F1F7216A600863815 /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F5C63F1F7216A500863815 /* CircularBuffer.m */; };
@@ -34,6 +35,8 @@
 		558882C11F72093E00409BD2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		558882C41F72093E00409BD2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		558882C61F72093E00409BD2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		558882EC1F72F41E00409BD2 /* FrequencyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrequencyViewController.h; sourceTree = "<group>"; };
+		558882ED1F72F41E00409BD2 /* FrequencyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FrequencyViewController.m; sourceTree = "<group>"; };
 		A3F5C63A1F7216A500863815 /* AudioFileReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFileReader.h; sourceTree = "<group>"; };
 		A3F5C63B1F7216A500863815 /* AudioFileReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFileReader.m; sourceTree = "<group>"; };
 		A3F5C63C1F7216A500863815 /* BufferedOverlapQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BufferedOverlapQueue.h; sourceTree = "<group>"; };
@@ -88,6 +91,8 @@
 				558882BB1F72093E00409BD2 /* ViewController.h */,
 				558882BC1F72093E00409BD2 /* ViewController.m */,
 				558882BE1F72093E00409BD2 /* Main.storyboard */,
+				558882EC1F72F41E00409BD2 /* FrequencyViewController.h */,
+				558882ED1F72F41E00409BD2 /* FrequencyViewController.m */,
 				558882C11F72093E00409BD2 /* Assets.xcassets */,
 				558882C31F72093E00409BD2 /* LaunchScreen.storyboard */,
 				558882C61F72093E00409BD2 /* Info.plist */,
@@ -204,6 +209,7 @@
 				558882BD1F72093E00409BD2 /* ViewController.m in Sources */,
 				A3F5C6511F7216A600863815 /* DataBufferBlock.m in Sources */,
 				A3F5C6541F7216A600863815 /* PeakFinder.m in Sources */,
+				558882EE1F72F41E00409BD2 /* FrequencyViewController.m in Sources */,
 				A3F5C6531F7216A600863815 /* Novocaine.m in Sources */,
 				A3F5C64D1F7216A600863815 /* AudioFileReader.m in Sources */,
 				A3F5C6521F7216A600863815 /* FFTHelper.m in Sources */,
@@ -336,6 +342,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = SMU.cse5323.Lab2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -348,6 +355,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = SMU.cse5323.Lab2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
