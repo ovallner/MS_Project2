@@ -20,8 +20,10 @@
 @property (strong, nonatomic) FFTHelper *fftHelper;
 @property (weak, nonatomic) IBOutlet UILabel *freqLabel1;
 @property (weak, nonatomic) IBOutlet UILabel *freqLabel2;
-@property (nonatomic) NSMutableDictionary *noteTableA;
-@property (nonatomic) NSMutableDictionary *halfstepLookup;
+@property (weak, nonatomic) IBOutlet UILabel *noteLabel;
+@property (weak, nonatomic) IBOutlet UILabel *noteLabel2;
+@property (nonatomic) int *noteFreqs;
+@property (nonatomic) NSMutableArray *halfstepArray;
 @end
 
 @implementation FrequencyViewController
@@ -48,39 +50,39 @@
     return _fftHelper;
 }
 
--(NSMutableDictionary *)noteTableA {
-    if(!_noteTableA) {
-        _noteTableA = [[NSMutableDictionary alloc] init];
-        [_noteTableA setValue:@110 forKey:@"2"];
-        [_noteTableA setValue:@220 forKey:@"3"];
-        [_noteTableA setValue:@440 forKey:@"4"];
-        [_noteTableA setValue:@880 forKey:@"5"];
-        [_noteTableA setValue:@1760 forKey:@"6"];
-        [_noteTableA setValue:@3520 forKey:@"7"];
-        [_noteTableA setValue:@7040 forKey:@"8"];
+-(int*) noteFreqs {
+    if(!_noteFreqs) {
+        _noteFreqs = malloc(sizeof(int)*7);
+        _noteFreqs[0] = 110;
+        _noteFreqs[1] = 220;
+        _noteFreqs[2] = 440;
+        _noteFreqs[3] = 880;
+        _noteFreqs[4] = 1760;
+        _noteFreqs[5] = 3520;
+        _noteFreqs[6] = 7040;
     }
-    return _noteTableA;
+    return _noteFreqs;
 }
 
--(NSMutableDictionary *) halfstepLookup {
-    if(!_halfstepLookup) {
-        _halfstepLookup = [[NSMutableDictionary alloc] init];
-        [_halfstepLookup setValue:@"A#" forKey:@"1"];
-        [_halfstepLookup setValue:@"B" forKey:@"2"];
-        [_halfstepLookup setValue:@"B#" forKey:@"3"];
-        [_halfstepLookup setValue:@"C" forKey:@"4"];
-        [_halfstepLookup setValue:@"C#" forKey:@"5"];
-        [_halfstepLookup setValue:@"D" forKey:@"6"];
-        [_halfstepLookup setValue:@"D#" forKey:@"7"];
-        [_halfstepLookup setValue:@"E" forKey:@"8"];
-        [_halfstepLookup setValue:@"F" forKey:@"9"];
-        [_halfstepLookup setValue:@"F#" forKey:@"10"];
-        [_halfstepLookup setValue:@"G" forKey:@"11"];
-        [_halfstepLookup setValue:@"G#" forKey:@"12"];
+-(NSMutableArray*) halfstepArray {
+    if(!_halfstepArray) {
+        _halfstepArray = [[NSMutableArray alloc] init];
+        _halfstepArray[0] = @"A";
+        _halfstepArray[1] = @"A#";
+        _halfstepArray[2] = @"B";
+        _halfstepArray[3] = @"C";
+        _halfstepArray[4] = @"C#";
+        _halfstepArray[5] = @"D";
+        _halfstepArray[6] = @"D#";
+        _halfstepArray[7] = @"E";
+        _halfstepArray[8] = @"F";
+        _halfstepArray[9] = @"F#";
+        _halfstepArray[10] = @"G";
+        _halfstepArray[11] = @"G#";
+        _halfstepArray[12] = @"A";
     }
-    return _halfstepLookup;
+    return _halfstepArray;
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -110,8 +112,8 @@
     
     // get audio stream data
     float* arrayData = malloc(sizeof(float)*BUFFER_SIZE);
-    float* fftMag = malloc(sizeof(float)*BUFFER_SIZE/2);
-    float* fftMagnitude = malloc(sizeof(float)*BUFFER_SIZE/8);
+    //float* fftMag = malloc(sizeof(float)*BUFFER_SIZE/2);
+    float* fftMagnitude = malloc(sizeof(float)*BUFFER_SIZE/2);
     
     
     [self.buffer fetchFreshData:arrayData withNumSamples:BUFFER_SIZE];
@@ -119,10 +121,9 @@
     
     // take forward FFT
     [self.fftHelper performForwardFFTWithData:arrayData
-                   andCopydBMagnitudeToBuffer:fftMag];
+                   andCopydBMagnitudeToBuffer:fftMagnitude];
     
-    [self fftAverage: fftMagnitude
-                    : fftMag];
+    //[self fftAverage: fftMagnitude: fftMag];
     
     float maxVal = 0;
     vDSP_Length maxIndex = 10000000;
@@ -130,7 +131,7 @@
     //vDSP_maxvi(fftMagnitude, 1, &maxVal, &maxIndex, BUFFER_SIZE/2);
     
     for(int i = 1; i < BUFFER_SIZE/8; i++) {
-        if(fftMagnitude[i] > maxVal && 20*log(fftMagnitude[i]) > 60) {
+        if(fftMagnitude[i] > maxVal && 20*log(fftMagnitude[i]) > 20) {
             maxVal = fftMagnitude[i];
             maxIndex = i;
         }
@@ -139,27 +140,86 @@
     float maxVal2 = 0;
     vDSP_Length maxIndex2 = 10000000;
     for(int i = 1; i < BUFFER_SIZE/8; i++){
-        if( (abs(maxIndex - i) * self.audioManager.samplingRate/(BUFFER_SIZE)) <= 30){
+        if( (fabs(maxIndex - i) * self.audioManager.samplingRate/(BUFFER_SIZE)) <= 30){
             i += 60;
             continue;
         }
-        if(fftMagnitude[i] > maxVal2 && 20*log(fftMagnitude[i]) > 60) {
+        if(fftMagnitude[i] > maxVal2 && 20*log(fftMagnitude[i]) > 20) {
             maxVal2 = fftMagnitude[i];
             maxIndex2 = i;
         }
     }
     
+    float freq1 = (float)maxIndex * self.audioManager.samplingRate/(BUFFER_SIZE);
+    float freq2 = (float)maxIndex2 * self.audioManager.samplingRate/(BUFFER_SIZE);
     
     if(maxIndex != 10000000) {
-        self.freqLabel1.text = [NSString stringWithFormat:@"%.1f Hz", ((float)maxIndex * 4 * self.audioManager.samplingRate/(BUFFER_SIZE))];
+        
+        int octave = 0;
+        
+        for(int i = 2; i < 9; i++) {
+            if(self.noteFreqs[i - 2] > (int)freq1) {
+                octave = i - 1;
+                break;
+            }
+        }
+        float a = 1.059463094359295;
+        int halfstep = 0;
+        for(int i = 0; i < 13; i++) {
+            if(freq1 > self.noteFreqs[octave -2] * pow(a, i)) {
+                if(freq1 - (self.noteFreqs[octave -2] * pow(a, i-1)) < freq1 - (self.noteFreqs[octave -2] * pow(a, i))) {
+                    halfstep = i-1;
+                }
+                else {
+                    halfstep = i;
+                }
+            }
+        }
+        //NSLog(@"note: %@", self.halfstepArray[halfstep]);
+        
+        NSLog(@"ocatave: %d", octave);
+        NSString* noteName = [NSString stringWithFormat: @"%@%d", self.halfstepArray[halfstep], octave];
+        self.noteLabel.text = noteName;
+        
+        self.freqLabel1.text = [NSString stringWithFormat:@"%.1f Hz", (freq1)];
+        
+        
+        
     }
     if(maxIndex2 != 10000000) {
-        self.freqLabel2.text = [NSString stringWithFormat:@"%.1f Hz", ((float)maxIndex2 * 4 * self.audioManager.samplingRate/(BUFFER_SIZE))];
+        
+        int octave = 0;
+        
+        for(int i = 2; i < 9; i++) {
+            if(self.noteFreqs[i - 2] > (int)freq2) {
+                octave = i - 1;
+                break;
+            }
+        }
+        float a = 1.059463094359295;
+        int halfstep = 0;
+        for(int i = 0; i < 13; i++) {
+            if(freq2 > self.noteFreqs[octave -2] * pow(a, i)) {
+                if(freq2 - (self.noteFreqs[octave -2] * pow(a, i-1)) < freq2 - (self.noteFreqs[octave -2] * pow(a, i))) {
+                    halfstep = i-1;
+                }
+                else {
+                    halfstep = i;
+                }
+            }
+        }
+        NSLog(@"note: %@", self.halfstepArray[halfstep]);
+        
+        NSLog(@"ocatave: %d", octave);
+        NSString* noteName = [NSString stringWithFormat: @"%@%d", self.halfstepArray[halfstep], octave];
+        self.noteLabel2.text = noteName;
+        self.freqLabel2.text = [NSString stringWithFormat:@"%.1f Hz", (freq2)];
     }
     
     free(arrayData);
     free(fftMagnitude);
-    free(fftMag);
+    
+    //free(fftMag);
 }
 
 -(void) fftAverage: (float *) fftMagnitude
@@ -176,6 +236,10 @@
         fftMagnitude[i/4] = bucketAvg;
     }
 
+}
+
+-(void) viewDidDisappear:(BOOL)animated {
+    free(self.noteFreqs);
 }
 
 /*

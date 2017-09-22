@@ -139,8 +139,8 @@
                    andCopydBMagnitudeToBuffer:fftMagnitude];
     
     // graph the FFT Data
-    [self.graphHelper setGraphData:fftMagnitude
-                    withDataLength:BUFFER_SIZE/2
+    [self.graphHelper setGraphData:fftMagnitude+(14000*BUFFER_SIZE/(int)self.audioManager.samplingRate)
+                    withDataLength:BUFFER_SIZE/2*.317
                      forGraphIndex:0
                  withNormalization:128.0
                      withZeroValue:-64];

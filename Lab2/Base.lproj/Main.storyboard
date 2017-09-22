@@ -157,21 +157,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bottom text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hzs-a8-9iW">
-                                <rect key="frame" x="142" y="323.5" width="90" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Freq2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eTc-w3-u0x">
+                                <rect key="frame" x="165" y="447.5" width="45" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p9e-fp-7vd">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <navigationItem title="Title" id="jDW-QJ-hCG"/>
-                                </items>
-                            </navigationBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eTc-w3-u0x">
-                                <rect key="frame" x="166.5" y="448" width="42" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XDA-OL-q1y">
+                                <rect key="frame" x="97" y="111" width="181" height="69"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="69" id="pfr-GU-2B4"/>
+                                    <constraint firstAttribute="width" constant="181" id="tkB-ca-ga4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Note2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KFb-F3-bth">
+                                <rect key="frame" x="124" y="499" width="127" height="68"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Freq1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hzs-a8-9iW">
+                                <rect key="frame" x="166" y="276" width="43" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -179,15 +188,27 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="hzs-a8-9iW" firstAttribute="centerX" secondItem="rBN-fa-aew" secondAttribute="centerX" id="Oci-3P-4Vp"/>
-                            <constraint firstItem="hzs-a8-9iW" firstAttribute="centerY" secondItem="rBN-fa-aew" secondAttribute="centerY" id="V8p-sB-yBv"/>
-                            <constraint firstItem="eTc-w3-u0x" firstAttribute="top" secondItem="hzs-a8-9iW" secondAttribute="bottom" constant="104" id="pGD-Aa-hnV"/>
-                            <constraint firstItem="eTc-w3-u0x" firstAttribute="centerX" secondItem="rBN-fa-aew" secondAttribute="centerX" id="w35-Wl-4NV"/>
+                            <constraint firstItem="XDA-OL-q1y" firstAttribute="leading" secondItem="rBN-fa-aew" secondAttribute="leading" constant="97" id="1ps-8K-kJe"/>
+                            <constraint firstItem="XDA-OL-q1y" firstAttribute="leading" secondItem="rBN-fa-aew" secondAttribute="leading" constant="97" id="8fB-sI-jor"/>
+                            <constraint firstItem="XDA-OL-q1y" firstAttribute="top" secondItem="rBN-fa-aew" secondAttribute="top" constant="111" id="9z1-QZ-E09"/>
+                            <constraint firstItem="eTc-w3-u0x" firstAttribute="centerX" secondItem="rBN-fa-aew" secondAttribute="centerX" id="D6j-nm-KdK"/>
+                            <constraint firstItem="XDA-OL-q1y" firstAttribute="top" secondItem="iEz-5p-1Ca" secondAttribute="bottom" constant="47" id="Naf-Ft-1fo"/>
+                            <constraint firstItem="XDA-OL-q1y" firstAttribute="centerX" secondItem="rBN-fa-aew" secondAttribute="centerX" id="Szc-Cy-Hee"/>
+                            <constraint firstItem="KFb-F3-bth" firstAttribute="top" secondItem="eTc-w3-u0x" secondAttribute="bottom" constant="66" id="TVE-Yj-dfR"/>
+                            <constraint firstItem="XDA-OL-q1y" firstAttribute="top" secondItem="rBN-fa-aew" secondAttribute="top" constant="111" id="WJG-78-yBU"/>
+                            <constraint firstItem="hzs-a8-9iW" firstAttribute="top" secondItem="XDA-OL-q1y" secondAttribute="bottom" constant="96" id="XYc-3u-Nrv"/>
+                            <constraint firstItem="ttb-45-vMN" firstAttribute="top" secondItem="KFb-F3-bth" secondAttribute="bottom" constant="100" id="cEB-Pn-5XR"/>
+                            <constraint firstItem="XDA-OL-q1y" firstAttribute="leading" secondItem="rBN-fa-aew" secondAttribute="leadingMargin" constant="81" id="dKt-g0-hEt"/>
+                            <constraint firstItem="KFb-F3-bth" firstAttribute="centerX" secondItem="rBN-fa-aew" secondAttribute="centerX" id="iMd-ty-tPF"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="XDA-OL-q1y" secondAttribute="trailing" constant="81" id="ih2-dq-sAW"/>
+                            <constraint firstItem="hzs-a8-9iW" firstAttribute="centerX" secondItem="rBN-fa-aew" secondAttribute="centerX" id="jQ0-1Y-3VF"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="freqLabel1" destination="hzs-a8-9iW" id="kpm-fD-KjM"/>
                         <outlet property="freqLabel2" destination="eTc-w3-u0x" id="9FU-XB-Anc"/>
+                        <outlet property="noteLabel" destination="XDA-OL-q1y" id="fqB-h1-h5W"/>
+                        <outlet property="noteLabel2" destination="KFb-F3-bth" id="x6J-AI-oW3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wNC-0r-sbe" userLabel="First Responder" sceneMemberID="firstResponder"/>
