@@ -17,10 +17,9 @@
 @interface FrequencyViewController ()
 @property (strong, nonatomic) Novocaine *audioManager;
 @property (strong, nonatomic) CircularBuffer *buffer;
+@property (strong, nonatomic) FFTHelper *fftHelper;
 @property (weak, nonatomic) IBOutlet UILabel *freqLabel1;
 @property (weak, nonatomic) IBOutlet UILabel *freqLabel2;
-@property (strong, nonatomic) FFTHelper *fftHelper;
-@property (nonatomic) float freq;
 @end
 
 @implementation FrequencyViewController
@@ -99,9 +98,9 @@
     
     float maxVal2 = 0;
     vDSP_Length maxIndex2 = 10000000;
-    for(int i = 1; i < BUFFER_SIZE/2 -1; i++){
+    for(int i = 1; i < BUFFER_SIZE/2; i++){
         if( (abs(maxIndex - i) * self.audioManager.samplingRate/(BUFFER_SIZE)) <= 30){
-            i += 80;
+            i += 60;
             continue;
         }
         if(fftMagnitude[i] > maxVal2 && 20*log(fftMagnitude[i]) > 60) {
@@ -111,9 +110,10 @@
     }
     
     
-    if(maxIndex != 10000000 && maxIndex2 != 10000000) {
+    if(maxIndex != 10000000) {
         self.freqLabel1.text = [NSString stringWithFormat:@"%.1f Hz", ((float)maxIndex * self.audioManager.samplingRate/(BUFFER_SIZE))];
-        
+    }
+    if(maxIndex2 != 10000000) {
         self.freqLabel2.text = [NSString stringWithFormat:@"%.1f Hz", ((float)maxIndex2 * self.audioManager.samplingRate/(BUFFER_SIZE))];
     }
     

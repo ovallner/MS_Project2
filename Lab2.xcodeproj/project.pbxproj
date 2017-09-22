@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		556729AF1F74BA2700A21D19 /* DopplerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 556729AE1F74BA2700A21D19 /* DopplerViewController.m */; };
+		556729B21F74BC7900A21D19 /* SMUGraphHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 556729B01F74BC7800A21D19 /* SMUGraphHelper.m */; };
 		558882B71F72093E00409BD2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 558882B61F72093E00409BD2 /* main.m */; };
 		558882BA1F72093E00409BD2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 558882B91F72093E00409BD2 /* AppDelegate.m */; };
 		558882BD1F72093E00409BD2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 558882BC1F72093E00409BD2 /* ViewController.m */; };
@@ -25,6 +27,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		556729AD1F74BA2700A21D19 /* DopplerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DopplerViewController.h; sourceTree = "<group>"; };
+		556729AE1F74BA2700A21D19 /* DopplerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DopplerViewController.m; sourceTree = "<group>"; };
+		556729B01F74BC7800A21D19 /* SMUGraphHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMUGraphHelper.m; sourceTree = "<group>"; };
+		556729B11F74BC7900A21D19 /* SMUGraphHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMUGraphHelper.h; sourceTree = "<group>"; };
 		558882B21F72093E00409BD2 /* Lab2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lab2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		558882B61F72093E00409BD2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		558882B81F72093E00409BD2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -91,6 +97,10 @@
 				558882BB1F72093E00409BD2 /* ViewController.h */,
 				558882BC1F72093E00409BD2 /* ViewController.m */,
 				558882BE1F72093E00409BD2 /* Main.storyboard */,
+				556729AD1F74BA2700A21D19 /* DopplerViewController.h */,
+				556729AE1F74BA2700A21D19 /* DopplerViewController.m */,
+				556729B11F74BC7900A21D19 /* SMUGraphHelper.h */,
+				556729B01F74BC7800A21D19 /* SMUGraphHelper.m */,
 				558882EC1F72F41E00409BD2 /* FrequencyViewController.h */,
 				558882ED1F72F41E00409BD2 /* FrequencyViewController.m */,
 				558882C11F72093E00409BD2 /* Assets.xcassets */,
@@ -208,12 +218,14 @@
 				A3F5C64E1F7216A600863815 /* BufferedOverlapQueue.m in Sources */,
 				558882BD1F72093E00409BD2 /* ViewController.m in Sources */,
 				A3F5C6511F7216A600863815 /* DataBufferBlock.m in Sources */,
+				556729B21F74BC7900A21D19 /* SMUGraphHelper.m in Sources */,
 				A3F5C6541F7216A600863815 /* PeakFinder.m in Sources */,
 				558882EE1F72F41E00409BD2 /* FrequencyViewController.m in Sources */,
 				A3F5C6531F7216A600863815 /* Novocaine.m in Sources */,
 				A3F5C64D1F7216A600863815 /* AudioFileReader.m in Sources */,
 				A3F5C6521F7216A600863815 /* FFTHelper.m in Sources */,
 				558882BA1F72093E00409BD2 /* AppDelegate.m in Sources */,
+				556729AF1F74BA2700A21D19 /* DopplerViewController.m in Sources */,
 				558882B71F72093E00409BD2 /* main.m in Sources */,
 				A3F5C6501F7216A600863815 /* CubicSpline.m in Sources */,
 			);
