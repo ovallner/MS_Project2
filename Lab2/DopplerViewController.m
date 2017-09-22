@@ -152,42 +152,44 @@
 }
 
 - (void)determineMovement: (float*) fftMagnitude {
+    float playedFreqBin = self.frequency / (self.audioManager.samplingRate/(BUFFER_SIZE));
+    int playedFreqIndex = round(playedFreqBin);
     
-    //int playedFreqIndex = (int)self.frequency / (self.audioManager.samplingRate/(BUFFER_SIZE));
-    
-    float maxVal = 0;
+    /*float maxVal = 0;
     vDSP_Length maxIndex = 10000000;
-    
-    //vDSP_maxvi(fftMagnitude, 1, &maxVal, &maxIndex, BUFFER_SIZE/2);
-    
     for(int i = 1; i < BUFFER_SIZE/2; i++) {
-        if(fftMagnitude[i] > maxVal ) {
+        if(fftMagnitude[i] > maxVal) {
             maxVal = fftMagnitude[i];
             maxIndex = i;
         }
     }
+    NSLog(@"Max Index: %ld", maxIndex);
+    NSLog(@"Freq bin: %f", playedFreqBin);
+    NSLog(@"Freq index: %d", playedFreqIndex);*/
     
-    float maxVal2 = 0;
-    vDSP_Length maxIndex2 = 10000000;
-    for(int i = 1; i < BUFFER_SIZE/2; i++){
-        if( (fabs(maxIndex - i) * self.audioManager.samplingRate/(BUFFER_SIZE)) <= 1){
-            i += 2;
-            continue;
-        }
-        if(fftMagnitude[i] > maxVal2) {
-            maxVal2 = fftMagnitude[i];
-            maxIndex2 = i;
-        }
+    
+    
+    
+    float lhsMagnitude = 0;
+    for(int i = playedFreqIndex - 10; i < playedFreqIndex; i++) {
+        lhsMagnitude += fftMagnitude[i];
     }
     
+    float rhsMagnitude = 0;
+    for(int i = playedFreqIndex + 1; i < playedFreqIndex + 11; i++) {
+        rhsMagnitude += fftMagnitude[i];
+    }
+    NSLog(@"lhs: %f", lhsMagnitude);
+    NSLog(@"rhs: %f", rhsMagnitude);
+    NSLog(@"diff ratio: %f", fabs(lhsMagnitude - rhsMagnitude));
     
-    if( fabs(self.frequency - (maxIndex2 * self.audioManager.samplingRate/(BUFFER_SIZE))) < 3) {
+    if(fabs(lhsMagnitude - rhsMagnitude) < 48) {
         self.motionLabel.text = @"No Motion";
     }
-    else if(self.frequency > (maxIndex2 * self.audioManager.samplingRate/(BUFFER_SIZE))) {
+    else if(lhsMagnitude > rhsMagnitude) {
         self.motionLabel.text = @"Moving away";
     }
-    else if(self.frequency < (maxIndex2 * self.audioManager.samplingRate/(BUFFER_SIZE))) {
+    else if(lhsMagnitude < rhsMagnitude) {
         self.motionLabel.text = @"Moving towards";
     }
     
