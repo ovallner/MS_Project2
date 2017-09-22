@@ -20,6 +20,8 @@
 @property (strong, nonatomic) FFTHelper *fftHelper;
 @property (weak, nonatomic) IBOutlet UILabel *freqLabel1;
 @property (weak, nonatomic) IBOutlet UILabel *freqLabel2;
+@property (nonatomic) NSMutableDictionary *noteTableA;
+@property (nonatomic) NSMutableDictionary *halfstepLookup;
 @end
 
 @implementation FrequencyViewController
@@ -44,6 +46,39 @@
     }
     
     return _fftHelper;
+}
+
+-(NSMutableDictionary *)noteTableA {
+    if(!_noteTableA) {
+        _noteTableA = [[NSMutableDictionary alloc] init];
+        [_noteTableA setValue:@110 forKey:@"2"];
+        [_noteTableA setValue:@220 forKey:@"3"];
+        [_noteTableA setValue:@440 forKey:@"4"];
+        [_noteTableA setValue:@880 forKey:@"5"];
+        [_noteTableA setValue:@1760 forKey:@"6"];
+        [_noteTableA setValue:@3520 forKey:@"7"];
+        [_noteTableA setValue:@7040 forKey:@"8"];
+    }
+    return _noteTableA;
+}
+
+-(NSMutableDictionary *) halfstepLookup {
+    if(!_halfstepLookup) {
+        _halfstepLookup = [[NSMutableDictionary alloc] init];
+        [_halfstepLookup setValue:@"A#" forKey:@"1"];
+        [_halfstepLookup setValue:@"B" forKey:@"2"];
+        [_halfstepLookup setValue:@"B#" forKey:@"3"];
+        [_halfstepLookup setValue:@"C" forKey:@"4"];
+        [_halfstepLookup setValue:@"C#" forKey:@"5"];
+        [_halfstepLookup setValue:@"D" forKey:@"6"];
+        [_halfstepLookup setValue:@"D#" forKey:@"7"];
+        [_halfstepLookup setValue:@"E" forKey:@"8"];
+        [_halfstepLookup setValue:@"F" forKey:@"9"];
+        [_halfstepLookup setValue:@"F#" forKey:@"10"];
+        [_halfstepLookup setValue:@"G" forKey:@"11"];
+        [_halfstepLookup setValue:@"G#" forKey:@"12"];
+    }
+    return _halfstepLookup;
 }
 
 
@@ -75,21 +110,26 @@
     
     // get audio stream data
     float* arrayData = malloc(sizeof(float)*BUFFER_SIZE);
-    float* fftMagnitude = malloc(sizeof(float)*BUFFER_SIZE/2);
+    float* fftMag = malloc(sizeof(float)*BUFFER_SIZE/2);
+    float* fftMagnitude = malloc(sizeof(float)*BUFFER_SIZE/8);
+    
     
     [self.buffer fetchFreshData:arrayData withNumSamples:BUFFER_SIZE];
     
     
     // take forward FFT
     [self.fftHelper performForwardFFTWithData:arrayData
-                   andCopydBMagnitudeToBuffer:fftMagnitude];
+                   andCopydBMagnitudeToBuffer:fftMag];
+    
+    [self fftAverage: fftMagnitude
+                    : fftMag];
     
     float maxVal = 0;
     vDSP_Length maxIndex = 10000000;
     
     //vDSP_maxvi(fftMagnitude, 1, &maxVal, &maxIndex, BUFFER_SIZE/2);
     
-    for(int i = 1; i < BUFFER_SIZE/2; i++) {
+    for(int i = 1; i < BUFFER_SIZE/8; i++) {
         if(fftMagnitude[i] > maxVal && 20*log(fftMagnitude[i]) > 60) {
             maxVal = fftMagnitude[i];
             maxIndex = i;
@@ -98,7 +138,7 @@
     
     float maxVal2 = 0;
     vDSP_Length maxIndex2 = 10000000;
-    for(int i = 1; i < BUFFER_SIZE/2; i++){
+    for(int i = 1; i < BUFFER_SIZE/8; i++){
         if( (abs(maxIndex - i) * self.audioManager.samplingRate/(BUFFER_SIZE)) <= 30){
             i += 60;
             continue;
@@ -111,14 +151,31 @@
     
     
     if(maxIndex != 10000000) {
-        self.freqLabel1.text = [NSString stringWithFormat:@"%.1f Hz", ((float)maxIndex * self.audioManager.samplingRate/(BUFFER_SIZE))];
+        self.freqLabel1.text = [NSString stringWithFormat:@"%.1f Hz", ((float)maxIndex * 4 * self.audioManager.samplingRate/(BUFFER_SIZE))];
     }
     if(maxIndex2 != 10000000) {
-        self.freqLabel2.text = [NSString stringWithFormat:@"%.1f Hz", ((float)maxIndex2 * self.audioManager.samplingRate/(BUFFER_SIZE))];
+        self.freqLabel2.text = [NSString stringWithFormat:@"%.1f Hz", ((float)maxIndex2 * 4 * self.audioManager.samplingRate/(BUFFER_SIZE))];
     }
     
     free(arrayData);
     free(fftMagnitude);
+    free(fftMag);
+}
+
+-(void) fftAverage: (float *) fftMagnitude
+                  : (float*) fftMag {
+    
+    float bucketAvg;
+    for(int i = 0; i < BUFFER_SIZE/2; i++) {
+        bucketAvg = 0;
+        for(int j = 0; j < 4 && i < BUFFER_SIZE/2; j++) {
+            bucketAvg += fftMag[i];
+            i++;
+        }
+        bucketAvg /= 4;
+        fftMagnitude[i/4] = bucketAvg;
+    }
+
 }
 
 /*
